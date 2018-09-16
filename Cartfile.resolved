@@ -1,1 +1,2 @@
 github "Alamofire/Alamofire" "4.7.3"
+github "gcharita/XMLMapper" "1.5.1"
