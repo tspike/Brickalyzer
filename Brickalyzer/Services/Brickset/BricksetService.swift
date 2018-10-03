@@ -7,36 +7,13 @@
 //
 
 import Foundation
-import XMLMapper
-import Alamofire
+import SOAPEngine64
 
-
-struct MyXMLObject: XMLMappable {
-    init?(map: XMLMap) {
-        foo = "bar"
-    }
-    
-    var nodeName: String!
-    
-    mutating func mapping(map: XMLMap) {
-        foo <- map["foo"]
-    }
-    
-    var foo: String
-    
-}
 struct BricksetService {
-    func getWSDL() {
-        let soapMessage = SOAPMessage(soapAction: "ActionName", nameSpace: "ActionNameSpace")
-        let soapEnvelope = SOAPEnvelope(soapMessage: soapMessage)
-        Alamofire.request("https://brickset.com/api/v2.asmx", method: .post, parameters: soapEnvelope.toXML(), encoding: XMLEncoding.soap(withAction: "ActionNameSpace#ActionName"), headers: nil)
-            .responseXMLObject(completionHandler: { (response: DataResponse<MyXMLObject>) in
-                print(response)
-            })
-//        let soap = SOAPEngine()
-        /*
+
+    func getSet(setID: String, completion: ((BricksetSet?, Error) -> Void)?) {
+        let soap = SOAPEngine()
         soap.userAgent = "Brickalyzer"
-        soap.requestURL("https://brickset.com/api/v2.asmx", soapAction: "getSet")
         soap.requestURL("https://brickset.com/api/v2.asmx", soapAction: "getSet", completeWithDictionary: { (num, result) in
             guard let result = result else { return }
             print(result)
@@ -44,6 +21,5 @@ struct BricksetService {
             guard let e = e else { return }
             print(e)
         }
- */
     }
 }

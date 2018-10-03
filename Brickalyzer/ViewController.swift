@@ -9,6 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
+    let stackView = UIStackView()
     var scanButton: UIButton = UIButton()
 
     override func viewDidLoad() {
@@ -17,20 +18,26 @@ class ViewController: UIViewController {
     }
     
     func setupButtons() {
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.distribution = .equalCentering
+        view.addSubview(stackView)
+        
         scanButton.setTitle("Scan", for: .normal)
         scanButton.setTitleColor(.blue, for: .normal)
-        self.view.addSubview(scanButton)
+        view.addSubview(scanButton)
         scanButton.translatesAutoresizingMaskIntoConstraints = false
+        stackView.addArrangedSubview(scanButton)
         NSLayoutConstraint.activate([
-            self.view.centerYAnchor.constraint(equalTo: scanButton.centerYAnchor),
-            self.view.centerXAnchor.constraint(equalTo: scanButton.centerXAnchor)
+            view.centerYAnchor.constraint(equalTo: stackView.centerYAnchor),
+            view.centerXAnchor.constraint(equalTo: stackView.centerXAnchor)
             ])
-        scanButton.addTarget(self, action: #selector(self.showScanner), for: .touchUpInside)
+        scanButton.addTarget(self, action: #selector(showScanner), for: .touchUpInside)
     }
     
     @objc func showScanner() {
         let scanVC = ScanSetViewController()
-        self.navigationController?.pushViewController(scanVC, animated: true)
+        navigationController?.pushViewController(scanVC, animated: true)
     }
 }
 

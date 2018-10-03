@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum LegoColor {
     case white, veryLightGray, veryLightBluishGray, lightBluishGray, lightGray, darkGray, darkBluishGray, black, darkRed, red, rust, salmon, lightSalmon, sandRed, reddishBrown, brown, darkBrown, darkTan, tan, lightFlesh, flesh, mediumDarkFlesh, darkFlesh, fabulandBrown, fabulandOrange, earthOrange, darkOrange, neonOrange, orange, mediumOrange, brightLightOrange, lightOrange, veryLightOrange, darkYellow, yellow, brightLightYellow, lightYellow, lightLime, yellowishGreen, neonGreen, mediumLime, lime, oliveGreen, darkGreen, green, brightGreen, mediumGreen, lightGreen, sandGreen, darkTurquoise, lightTurquoise, aqua, lightAqua, darkBlue, blue, darkAzure, mediumAzure, mediumBlue, maerskBlue, brightLightBlue, lightBlue, skyBlue, sandBlue, blueViolet, darkBlueViolet, violet, mediumViolet, lightViolet, darkPurple, purple, lightPurple, mediumLavender, lavender, sandPurple, magenta, darkPink, mediumDarkPink, brightPink, pink, lightPink, transClear, transBlack, transRed, transNeonOrange, transOrange, transLightOrange, transNeonYellow, transYellow, transNeonGreen, transBrightGreen, transGreen, transDarkBlue, transMediumBlue, transLightBlue, transVeryLtBlue, transLightPurple, transPurple, transDarkPink, transPink, chromeGold, chromeSilver, chromeAntiqueBrass, chromeBlack, chromeBlue, chromeGreen, chromePink, pearlWhite, pearlVeryLightGray, pearlLightGray, flatSilver, pearlDarkGray, metalBlue, pearlLightGold, pearlGold, flatDarkGold, copper, metallicSilver, metallicGreen, metallicGold, milkyWhite, glowInDarkWhite, glowInDarkOpaque, glowInDarkTrans, glitterTransClear, glitterTransNeonGreen, glitterTransLightBlue, glitterTransPurple, glitterTransDarkPink, speckleBlackSilver, speckleBlackGold, speckleBlackCopper, speckleDBGraySilver, other
@@ -286,7 +287,7 @@ enum LegoColor {
         case .other: return "Other"
         }
     }
-    
+
     var numParts: Int {
         switch(self) {
         case .speckleDBGraySilver: return 5

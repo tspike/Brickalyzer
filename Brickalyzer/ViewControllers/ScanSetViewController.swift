@@ -19,10 +19,11 @@ class ScanSetViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     var enterSetBottomConstraint = NSLayoutConstraint()
     let padding = CGFloat(10.0)
     var dismissRecognizer: UITapGestureRecognizer!
+    let dataSource = DataSource()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        showScanner()
+//        showScanner()
         setupStackView()
         registerForKeyboard()
         dismissRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
@@ -48,12 +49,23 @@ class ScanSetViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         UIView.animate(withDuration: 1.0, animations: { () in
             self.enterSetBottomConstraint.constant = -self.padding - frame.size.height
         })
-        print(enterSetBottomConstraint)
     }
 
     @objc func keyboardWillHide() {
         enterSetBottomConstraint.constant = -padding
         print(enterSetBottomConstraint)
+    }
+    
+    @objc func buttonTapped() {
+        guard let text: String = enterSetText.text else {
+            print("nil")
+            return
+        }
+        print("\(enterSetText.text!)")
+        let vc = SetViewController()
+        vc.setID = text
+        navigationController?.pushViewController(vc, animated: true)
+
     }
 
     func setupStackView() {

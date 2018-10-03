@@ -52,12 +52,8 @@ extension DataRequest {
     }
     
     @discardableResult
-    fileprivate func responseDecodable<T: Decodable>(queue: DispatchQueue? = nil, completionHandler: @escaping (DataResponse<T>) -> Void) -> Self {
+    public func responseDecodable<T: Decodable>(queue: DispatchQueue? = nil, completionHandler: @escaping (DataResponse<T>) -> Void) -> Self {
         return response(queue: queue, responseSerializer: decodableResponseSerializer(), completionHandler: completionHandler)
     }
-    
-    @discardableResult
-    func responseRebrickableSets(queue: DispatchQueue? = nil, completionHandler: @escaping (DataResponse<RebrickableSets>) -> Void) -> Self {
-        return responseDecodable(queue: queue, completionHandler: completionHandler)
-    }
+
 }

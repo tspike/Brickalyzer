@@ -48,7 +48,7 @@ class SetsDataSource: NSObject, UICollectionViewDataSource {
     
     func fetchData(_ completion: (() -> Void)?) {
         RebrickableService().getSets(completion: { sets in
-            self.sets = sets
+//            self.sets = sets
             if let completion = completion {
                 completion()
                 return

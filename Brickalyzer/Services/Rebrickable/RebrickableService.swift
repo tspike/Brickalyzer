@@ -16,7 +16,7 @@ struct RebrickableService {
         "Accept": "application/json"
     ]
 
-    func getSets(page: String = "1", pageSize: String = "100", search: String? = nil, completion: (([LegoSet]) -> Void)?)  {
+    func getSets(page: String = "1", pageSize: String = "100", search: String? = nil, completion: (([RebrickableSet]) -> Void)?)  {
         let endpoint = "lego/sets/"
         var parameters: Parameters = ["page": page,
                                       "pageSize": pageSize]
@@ -31,5 +31,34 @@ struct RebrickableService {
                 return
             }
         })
+    }
+    
+    func getSet(setID: String, completion: ((RebrickableSet?, Error?) -> Void)?)  {
+        let endpoint = "lego/sets/\(setID)/"
+        Alamofire.request("\(baseURL)\(endpoint)", headers: self.headers)
+            .responseJSON(completionHandler: { response in
+                if response.error != nil {
+                    completion?(nil, response.error)
+                    return
+                }
+            })
+            .responseRebrickableSet(completionHandler: { response in
+                if let set = response.result.value {
+                    completion?(set, nil)
+                    return
+                }
+            })
+    }
+}
+
+extension DataRequest {
+    @discardableResult
+    func responseRebrickableSets(queue: DispatchQueue? = nil, completionHandler: @escaping (DataResponse<RebrickableSets>) -> Void) -> Self {
+        return responseDecodable(queue: queue, completionHandler: completionHandler)
+    }
+
+    @discardableResult
+    func responseRebrickableSet(queue: DispatchQueue? = nil, completionHandler: @escaping (DataResponse<RebrickableSet>) -> Void) -> Self {
+        return responseDecodable(queue: queue, completionHandler: completionHandler)
     }
 }
