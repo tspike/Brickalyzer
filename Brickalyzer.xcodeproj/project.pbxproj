@@ -14,6 +14,7 @@
 		283340D521647917001593E8 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 283340D421647916001593E8 /* Accounts.framework */; };
 		283340DE21647A61001593E8 /* SOAPEngine64.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 283340DC21647A59001593E8 /* SOAPEngine64.framework */; };
 		283340DF21647A61001593E8 /* SOAPEngine64.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 283340DC21647A59001593E8 /* SOAPEngine64.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		283340F92165CA1D001593E8 /* Codable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283340F82165CA1D001593E8 /* Codable+Extensions.swift */; };
 		28440910214603E400A62445 /* RebrickableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2844090F214603E400A62445 /* RebrickableService.swift */; };
 		2844093A21460F3F00A62445 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2844093921460F3F00A62445 /* Models.swift */; };
 		2844093C2146207000A62445 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2844093B2146207000A62445 /* Colors.swift */; };
@@ -23,8 +24,6 @@
 		2868D36121560630004F446B /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2868D35A21560623004F446B /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2868D36221560630004F446B /* CouchbaseLiteSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2868D35B21560623004F446B /* CouchbaseLiteSwift.framework */; };
 		2868D36321560630004F446B /* CouchbaseLiteSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2868D35B21560623004F446B /* CouchbaseLiteSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2868D36421560630004F446B /* XMLMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2868D35C21560623004F446B /* XMLMapper.framework */; };
-		2868D36521560630004F446B /* XMLMapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2868D35C21560623004F446B /* XMLMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		28B127A4214ED0CF00989357 /* SetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B127A3214ED0CF00989357 /* SetViewController.swift */; };
 		28B127A6214ED0E000989357 /* ScanSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B127A5214ED0E000989357 /* ScanSetViewController.swift */; };
 		28B127B5214EDC2200989357 /* BricksetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B127B4214EDC2200989357 /* BricksetService.swift */; };
@@ -58,7 +57,6 @@
 				283340DF21647A61001593E8 /* SOAPEngine64.framework in Embed Frameworks */,
 				2868D36321560630004F446B /* CouchbaseLiteSwift.framework in Embed Frameworks */,
 				2868D36121560630004F446B /* Alamofire.framework in Embed Frameworks */,
-				2868D36521560630004F446B /* XMLMapper.framework in Embed Frameworks */,
 				2814D30C2163C98D002B341B /* AlamofireImage.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -72,6 +70,7 @@
 		283340D221647911001593E8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		283340D421647916001593E8 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		283340DC21647A59001593E8 /* SOAPEngine64.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SOAPEngine64.framework; path = ThirdParty/SOAPEngine64.framework; sourceTree = "<group>"; };
+		283340F82165CA1D001593E8 /* Codable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+Extensions.swift"; sourceTree = "<group>"; };
 		2844090F214603E400A62445 /* RebrickableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RebrickableService.swift; sourceTree = "<group>"; };
 		2844093921460F3F00A62445 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		2844093B2146207000A62445 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -107,7 +106,6 @@
 				283340D321647911001593E8 /* Security.framework in Frameworks */,
 				2868D36221560630004F446B /* CouchbaseLiteSwift.framework in Frameworks */,
 				2868D36021560630004F446B /* Alamofire.framework in Frameworks */,
-				2868D36421560630004F446B /* XMLMapper.framework in Frameworks */,
 				2814D30B2163C98D002B341B /* AlamofireImage.framework in Frameworks */,
 				283340DE21647A61001593E8 /* SOAPEngine64.framework in Frameworks */,
 			);
@@ -129,6 +127,14 @@
 				9FCB8F3E1E3E66FC00B7689E /* SOAPEngine64.framework */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		283340F72165CA11001593E8 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				283340F82165CA1D001593E8 /* Codable+Extensions.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		2844090D214603CA00A62445 /* Models */ = {
@@ -216,6 +222,7 @@
 		28FDDC232146011A00FD301A /* Brickalyzer */ = {
 			isa = PBXGroup;
 			children = (
+				283340F72165CA11001593E8 /* Helpers */,
 				28DD47B32146412200ADB53F /* ViewControllers */,
 				2844090E214603D700A62445 /* Services */,
 				2844090D214603CA00A62445 /* Models */,
@@ -350,6 +357,7 @@
 				28B127EC214F471A00989357 /* DataSource.swift in Sources */,
 				28440910214603E400A62445 /* RebrickableService.swift in Sources */,
 				284409402146287A00A62445 /* RebrickableModels.swift in Sources */,
+				283340F92165CA1D001593E8 /* Codable+Extensions.swift in Sources */,
 				28B127A6214ED0E000989357 /* ScanSetViewController.swift in Sources */,
 				2844093A21460F3F00A62445 /* Models.swift in Sources */,
 				28B127B5214EDC2200989357 /* BricksetService.swift in Sources */,

@@ -54,11 +54,11 @@ struct RebrickableSet: Codable {
 
 extension LegoSet {
     static func fromRebrickableSet(_ set: RebrickableSet) -> LegoSet? {
-        return LegoSet(setID: set.setID, name: set.name, partCount: set.partCount, msrp: set.msrp, parts: set.parts)
+        return LegoSet(setID: String(set.setID), name: set.name, partCount: set.partCount, msrp: set.msrp, parts: set.parts)
     }
 
     func merged(with rebrickableSet: RebrickableSet, overwrite: Bool = false) -> LegoSet {
-        let setID = overwrite ? rebrickableSet.setID : self.setID
+        let setID = overwrite ? String(rebrickableSet.setID) : self.setID
         let name = overwrite ? rebrickableSet.name : self.name
         let partCount = overwrite ? rebrickableSet.partCount : self.partCount
         let msrp = overwrite ? rebrickableSet.msrp : (self.msrp ?? rebrickableSet.msrp)

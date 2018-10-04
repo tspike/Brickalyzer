@@ -28,8 +28,19 @@ struct DataSource {
         }
         var legoSet: LegoSet?
 
+        var rebrickableResult: (RebrickableSet?, Error?)? = nil
+        var bricksetResult: (BricksetSet?, Error?)? = nil
         let rebrickableService = RebrickableService()
+        func checkResults() {
+            guard let rebrickableResult = rebrickableResult,
+                let bricksetResult = bricksetResult else {
+                    return
+            }
+            completion(legoSet, bricksetResult.1 ?? rebrickableResult.1)
+        }
         rebrickableService.getSet(setID: setID, completion: { result, error in
+            rebrickableResult = (result, error)
+            defer { checkResults() }
             guard error == nil else {
                 print("Failed to fetch set \(setID) from Rebrickable.\n\n\(error.debugDescription)")
                 return
@@ -46,8 +57,25 @@ struct DataSource {
         })
 
         let bricksetService = BricksetService()
-//        bricksetService.getSet(setID: setID, completion: { result, error in
-//        })
+        bricksetService.getSet(setID: setID, completion: { result, error in
+            bricksetResult = (result, error)
+            defer { checkResults() }
+            guard error == nil else {
+                print("Failed to fetch set \(setID) from Brickset .\n\n\(error.debugDescription)")
+                return
+            }
+            guard let result = result else {
+                print("Failed to fetch set \(setID) from Brickset. Result was nil.")
+                return
+            }
+            if legoSet == nil {
+                legoSet = LegoSet.fromBricksetSet(result)
+            } else {
+                legoSet = legoSet!.merged(with: result)
+            }
+            print(result)
+            print(error)
+        })
 
     }
     func fetchSet(upc: String, completion: ((LegoSet?, Error?) -> Void)) {

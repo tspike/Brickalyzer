@@ -34,9 +34,14 @@ class SetViewController: UIViewController {
     }
 
     func fetchSet() {
-        DataSource().fetchSet(setID: setID, completion: { set, error in
-            print(set)
-            print(error)
+        DataSource().fetchSet(setID: setID, completion: { [weak self] set, error in
+            guard let strongSelf = self else { return }
+            strongSelf.set = set
+            if let error = error {
+                let alert = UIAlertController(title: "Error", message: "There was a problem fetching set \(strongSelf.setID ?? ""): \(error)", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil))
+                strongSelf.present(alert, animated: true, completion: nil)
+            }
         })
     }
 

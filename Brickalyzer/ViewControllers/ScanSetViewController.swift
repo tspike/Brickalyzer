@@ -57,15 +57,16 @@ class ScanSetViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
     
     @objc func buttonTapped() {
-        guard let text: String = enterSetText.text else {
+        guard var text: String = enterSetText.text else {
             print("nil")
             return
         }
-        print("\(enterSetText.text!)")
+        if (!text.contains("-")) {
+            text = "\(text)-1"
+        }
         let vc = SetViewController()
         vc.setID = text
         navigationController?.pushViewController(vc, animated: true)
-
     }
 
     func setupStackView() {

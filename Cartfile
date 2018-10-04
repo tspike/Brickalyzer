@@ -2,3 +2,4 @@ github "Alamofire/Alamofire" ~> 4.7
 github "Alamofire/AlamofireImage" ~> 3.4
 github "gcharita/XMLMapper" ~> 1.5
 github "couchbase/couchbase-lite-ios" ~> 2.1
+github "tattn/MoreCodable" ~> 0.2
