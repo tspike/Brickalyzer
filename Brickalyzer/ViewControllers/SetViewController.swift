@@ -25,22 +25,86 @@ class SetViewController: UIViewController {
     let setIDLabel = UILabel()
     let setTitleLabel = UILabel()
     let numPiecesLabel = UILabel()
+    let dimmingView = UIView()
+    let loader = UIImageView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         fetchSet()
         setupStackView()
+        setupLoader()
+    }
+
+    func setupLoader() {
+        dimmingView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(dimmingView)
+        dimmingView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
+        view.bringSubviewToFront(dimmingView)
+        NSLayoutConstraint.activate([
+            dimmingView.topAnchor.constraint(equalTo: view.topAnchor),
+            dimmingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            dimmingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            dimmingView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
+        dimmingView.addSubview(loader)
+        let image = UIImage(named: "smileyfig", in: Bundle(for: SetViewController.self), compatibleWith: nil)
+        loader.image = image
+        loader.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            loader.heightAnchor.constraint(equalToConstant: 60),
+            loader.widthAnchor.constraint(equalToConstant: 60),
+            loader.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loader.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            ])
+//        loader.isHidden = true
+//        dimmingView.isHidden = true
+    }
+
+    func showLoader() {
+//        dimmingView.isHidden = false
+//        loader.isHidden = false
+        rotateLoader()
+    }
+
+    func rotateLoader() {
+        loader.rotate()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.95, execute: {
+            self.loader.stopRotating()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.95, execute: {
+                self.rotateLoader()
+            })
+        })
+    }
+
+    func hideLoader() {
+        dimmingView.isHidden = true
+        loader.isHidden = true
+        loader.stopRotating()
     }
 
     func fetchSet() {
-        DataSource().fetchSet(setID: setID, completion: { [weak self] set, error in
+        showLoader()
+        let dataSource = DataSource()
+        dataSource.fetchSet(setID: setID, completion: { [weak self] set, error in
             guard let strongSelf = self else { return }
+            strongSelf.hideLoader()
             strongSelf.set = set
             if let error = error {
-                let alert = UIAlertController(title: "Error", message: "There was a problem fetching set \(strongSelf.setID ?? ""): \(error)", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil))
+                let alert = UIAlertController(title: "Error", message: "There was a problem fetching set \(strongSelf.setID ?? ""): \(error.localizedDescription)", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: { action in
+                    strongSelf.navigationController?.popViewController(animated: true)
+                }))
                 strongSelf.present(alert, animated: true, completion: nil)
+                return
+            }
+            if error == nil && set == nil {
+                let alert = UIAlertController(title: "Error", message: "No set found \(strongSelf.setID ?? "")", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: { action in
+                    strongSelf.navigationController?.popViewController(animated: true)
+                }))
+                strongSelf.present(alert, animated: true, completion: nil)
+                return
             }
         })
     }
@@ -82,5 +146,6 @@ class SetViewController: UIViewController {
         }
         setIDLabel.text = String(setID)
         setTitleLabel.text = set?.name
+//        rarePartsText.text =
     }
 }

@@ -22,8 +22,9 @@ struct DataSource {
     }
 
     func fetchSet(setID: String, completion: @escaping ((LegoSet?, Error?) -> Void)) {
-        if let doc = database.document(withID: "Set.\(setID)") {
-            completion(LegoSet.fromDocument(doc), nil)
+        let docID = "Set.\(setID)"
+        if let doc = database.document(withID: docID) {
+            completion(LegoSet(dictionary: doc.toDictionary()), nil)
             return
         }
         var legoSet: LegoSet?
@@ -31,18 +32,29 @@ struct DataSource {
         var rebrickableResult: (RebrickableSet?, Error?)? = nil
         var bricksetResult: (BricksetSet?, Error?)? = nil
         let rebrickableService = RebrickableService()
+        var pendingTasks = 2
+
         func checkResults() {
-            guard let rebrickableResult = rebrickableResult,
-                let bricksetResult = bricksetResult else {
-                    return
+            guard pendingTasks == 0 else {
+                return
             }
-            completion(legoSet, bricksetResult.1 ?? rebrickableResult.1)
+            let error = bricksetResult?.1 ?? rebrickableResult?.1
+            completion(legoSet, error)
+            guard error == nil else { return }
+            let document = MutableDocument(id: docID, data: legoSet.dictionary)
+            do {
+                try database.saveDocument(document)
+            } catch {
+                print(error.localizedDescription)
+            }
         }
+
         rebrickableService.getSet(setID: setID, completion: { result, error in
+            pendingTasks -= 1
             rebrickableResult = (result, error)
             defer { checkResults() }
             guard error == nil else {
-                print("Failed to fetch set \(setID) from Rebrickable.\n\n\(error.debugDescription)")
+                print("Failed to fetch set \(setID) from Rebrickable.\n\n\(error?.localizedDescription)")
                 return
             }
             guard let result = result else {
@@ -58,10 +70,11 @@ struct DataSource {
 
         let bricksetService = BricksetService()
         bricksetService.getSet(setID: setID, completion: { result, error in
+            pendingTasks -= 1
             bricksetResult = (result, error)
             defer { checkResults() }
             guard error == nil else {
-                print("Failed to fetch set \(setID) from Brickset .\n\n\(error.debugDescription)")
+                print("Failed to fetch set \(setID) from Brickset .\n\n\(error!.localizedDescription)")
                 return
             }
             guard let result = result else {
@@ -73,8 +86,8 @@ struct DataSource {
             } else {
                 legoSet = legoSet!.merged(with: result)
             }
-            print(result)
-            print(error)
+//            print(result)
+//            print(error)
         })
 
     }

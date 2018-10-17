@@ -73,7 +73,6 @@ class ScanSetViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         view.addSubview(enterSetStackView)
         enterSetButton.setTitle("Go", for: .normal)
         enterSetButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        enterSetText.placeholder = "Set ID / UPC"
         enterSetText.attributedPlaceholder = NSAttributedString(string: "Set ID / UPC", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 44))
         enterSetText.leftView = paddingView
@@ -81,8 +80,9 @@ class ScanSetViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         let gray = UIColor.gray.withAlphaComponent(0.3)
         enterSetText.backgroundColor = gray
         enterSetText.textColor = .white
-        enterSetText.adjustsFontSizeToFitWidth = true
+//        enterSetText.adjustsFontSizeToFitWidth = true
         enterSetText.borderStyle = .line
+        enterSetText.clipsToBounds = false
         enterSetText.autocorrectionType = .no
         enterSetText.keyboardType = .numberPad
         enterSetText.tintColor = .white

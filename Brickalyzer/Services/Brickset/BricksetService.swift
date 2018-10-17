@@ -63,18 +63,19 @@ struct BricksetService {
                                 let getSetsResponse = body["getSetsResponse"] as? [AnyHashable: Any],
                                 let getSetsResult = getSetsResponse["getSetsResult"] as? [AnyHashable: Any],
                                 let set = getSetsResult["sets"] as? [String: Any]
-
-                                else { return }
-                            let bs = BricksetSet(dictionary: set)
-                            if let completion = completion {
-                                completion(bs, nil)
+                                else {
+                                    completion?(nil, BrickError.error("Invalid response from Brickset"))
+                                    return
                             }
-        }) { (e) in
+                            let bs = BricksetSet(dictionary: set)
+                            completion?(bs, nil)
+                            print(bs)
+        }, failWithError: { (e) in
             guard let e = e,
                 let completion = completion
                 else { return }
             completion(nil, e)
             return
-        }
+        })
     }
 }

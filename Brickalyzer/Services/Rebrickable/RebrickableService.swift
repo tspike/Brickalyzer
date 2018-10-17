@@ -36,6 +36,7 @@ struct RebrickableService {
     func getSet(setID: String, completion: ((RebrickableSet?, Error?) -> Void)?)  {
         let endpoint = "lego/sets/\(setID)/"
         Alamofire.request("\(baseURL)\(endpoint)", headers: self.headers)
+            .validate(statusCode: 200..<300)
             .responseJSON(completionHandler: { response in
                 if response.error != nil {
                     completion?(nil, response.error)
@@ -47,6 +48,7 @@ struct RebrickableService {
                     completion?(set, nil)
                     return
                 }
+                print(response)
             })
     }
 }

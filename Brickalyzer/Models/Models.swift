@@ -66,26 +66,33 @@ struct LegoSet: Codable {
         self.parts = parts
     }
 
+    init(dictionary: [String: Any]) {
+        self.setID = fromDictionaryValue(dictionary, name: "setID")!
+        self.name = fromDictionaryValue(dictionary, name: "name")!
+        self.partCount = fromDictionaryValue(dictionary, name: "partCount")!
+        self.msrp = fromDictionaryValue(dictionary, name: "msrp")
 
-    static func fromDocument(_ doc: Document) -> LegoSet? {
-        let partCount = doc.int(forKey: "partCount")
-        //        let parts = doc.array(forKey: "parts")
-        guard let name = doc.string(forKey: "name"),
-            let setID = doc.string(forKey: "setID"),
-            partCount != 0 else {
-                return nil
-        }
-        var msrp: Decimal? = Decimal(doc.int(forKey: "msrpInCents")) / 100
-        if msrp == 0 {
-            msrp = nil
-        }
+        self.setImageURL = fromDictionaryValue(dictionary, name: "setImageURL")
+        self.largeThumbnailURL = fromDictionaryValue(dictionary, name: "largeThumbnailURL")
+        self.thumbnailURL = fromDictionaryValue(dictionary, name: "thumbnailURL")
+        self.minifigs = fromDictionaryValue(dictionary, name: "minifigs")
+        self.released = fromDictionaryValue(dictionary, name: "released")
+        self.subtheme = fromDictionaryValue(dictionary, name: "subtheme")
+        self.theme = fromDictionaryValue(dictionary, name: "theme")
+        self.themeGroup = fromDictionaryValue(dictionary, name: "themeGroup")
+        self.UPC = fromDictionaryValue(dictionary, name: "UPC")
+        self.year = fromDictionaryValue(dictionary, name: "year")
 
-        var setImageURL: URL? = nil
-        if let setImageURLString = doc.string(forKey: "setImageURL") {
-            setImageURL = URL(string: setImageURLString)
-        }
+        self.bricksetID = fromDictionaryValue(dictionary, name: "bricksetID")
+        self.bricksetURL = fromDictionaryValue(dictionary, name: "bricksetURL")
+        self.owned = fromDictionaryValue(dictionary, name: "owned")
+        self.qtyOwned = fromDictionaryValue(dictionary, name: "qtyOwned")
 
-        return LegoSet(setID: setID, name: name, partCount: partCount, msrp: msrp, setImageURL: setImageURL, parts: [])
+        self.parts = fromDictionaryValue(dictionary, name: "parts")
     }
+
+//    static func fromDocument(_ doc: Document) -> LegoSet? {
+//        return LegoSet(dictionary: doc.toDictionary())
+//    }
 
 }
