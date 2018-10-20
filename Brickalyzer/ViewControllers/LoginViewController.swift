@@ -16,16 +16,39 @@ enum LoginType {
 
 class LoginViewController: UIViewController {
     var loginType: LoginType? = .brickset
-    var scrollView = UIScrollView()
-    var emailField = UITextField()
-    var passwordField = UITextField()
-    var createAccountButton = Styles.secondaryButton()
-    var loginButton = Styles.primaryButton()
-    var skipButton = Styles.secondaryButton()
+    let scrollView = UIScrollView()
+    let emailField = UITextField()
+    let passwordField = UITextField()
+    let createAccountButton = Styles.secondaryButton()
+    let loginButton = Styles.primaryButton()
+    let skipButton = Styles.secondaryButton()
+    var scrollViewHeight = NSLayoutConstraint()
+    let contentView = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillUpdate), name: UIWindow.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillUpdate), name: UIWindow.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillUpdate), name: UIWindow.keyboardWillChangeFrameNotification, object: nil)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    @objc private func keyboardWillUpdate(notification: Notification) {
+        guard let keyboardFrame = notification.userInfo?[UIWindow.keyboardFrameEndUserInfoKey] as? CGRect else {
+            return
+        }
+        let keyboardHeight = keyboardFrame.size.height
+        let viewHeight = view.frame.size.height
+        print("keyboard height: \(keyboardHeight)")
+        print("view height: \(viewHeight)")
+        UIView.animate(withDuration: 0.1, animations: {
+            self.scrollViewHeight.constant = viewHeight - keyboardHeight
+            self.scrollView.layoutIfNeeded()
+        })
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -35,12 +58,22 @@ class LoginViewController: UIViewController {
     private func setupViews() {
         view.backgroundColor = .white
         view.addSubview(scrollView)
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(contentView)
+        scrollView.bounces = true
+        scrollView.alwaysBounceVertical = true
+        scrollViewHeight = scrollView.heightAnchor.constraint(equalToConstant: view.frame.size.height)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollViewHeight,
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
             ])
 
         setupTextFields()
@@ -51,7 +84,7 @@ class LoginViewController: UIViewController {
         let buttons: [UIButton] = [createAccountButton, loginButton, skipButton]
         buttons.forEach { button in
             button.translatesAutoresizingMaskIntoConstraints = false
-            self.scrollView.addSubview(button)
+            self.contentView.addSubview(button)
         }
         createAccountButton.setTitle("Create Account", for: .normal)
         loginButton.setTitle("Link Account", for: .normal)
@@ -60,12 +93,13 @@ class LoginViewController: UIViewController {
         NSLayoutConstraint.activate([
             createAccountButton.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 10),
             createAccountButton.trailingAnchor.constraint(equalTo: passwordField.trailingAnchor),
-            loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loginButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             loginButton.widthAnchor.constraint(equalTo: passwordField.widthAnchor, multiplier: 0.8),
             loginButton.heightAnchor.constraint(equalToConstant: 44),
             loginButton.topAnchor.constraint(equalTo: createAccountButton.bottomAnchor, constant: 15),
             skipButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 15),
-            skipButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            skipButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            skipButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
             ])
     }
 
@@ -89,19 +123,19 @@ class LoginViewController: UIViewController {
         passwordField.isSecureTextEntry = true
         [emailField, passwordField].forEach { field in
             field.translatesAutoresizingMaskIntoConstraints = false
-            self.scrollView.addSubview(field)
+            self.contentView.addSubview(field)
             field.delegate = self
             field.autocorrectionType = .no
             field.autocapitalizationType = .none
             field.borderStyle = UITextField.BorderStyle.roundedRect
             NSLayoutConstraint.activate([
-                field.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor),
-                field.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor, multiplier: 0.75),
+                field.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+                field.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.75),
                 field.heightAnchor.constraint(equalToConstant: 44)
                 ])
         }
         NSLayoutConstraint.activate([
-            emailField.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 15),
+            emailField.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
             passwordField.topAnchor.constraint(equalTo: emailField.bottomAnchor, constant: 15)
             ])
     }
