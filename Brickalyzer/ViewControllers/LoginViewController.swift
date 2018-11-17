@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import KeychainAccess
 
 enum LoginType {
     case rebrickable
@@ -15,7 +16,7 @@ enum LoginType {
 }
 
 class LoginViewController: UIViewController {
-    var loginType: LoginType? = .brickset
+    var loginType: LoginType = .brickset
     let scrollView = UIScrollView()
     let emailField = UITextField()
     let passwordField = UITextField()
@@ -24,6 +25,7 @@ class LoginViewController: UIViewController {
     let skipButton = Styles.secondaryButton()
     var scrollViewHeight = NSLayoutConstraint()
     let contentView = UIView()
+    let auth = Authentication()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,10 +33,51 @@ class LoginViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillUpdate), name: UIWindow.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillUpdate), name: UIWindow.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillUpdate), name: UIWindow.keyboardWillChangeFrameNotification, object: nil)
+        loginButton.addTarget(self, action: #selector(loginTapped), for: .touchUpInside)
     }
 
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+
+    @objc private func loginTapped() {
+        guard let username = emailField.text,
+            let password = passwordField.text else {
+                return
+        }
+        let handler: ((Bool, Error?) -> Void) = { success, error in
+            if success {
+                guard let nextVC = self.nextViewController() else {
+                    self.navigationController?.popViewController(animated: true)
+                    return
+                }
+                self.navigationController?.pushViewController(nextVC, animated: true)
+            } else {
+                print(error)
+            }
+        }
+        switch loginType {
+        case .brickset:
+            auth.login(authProvider: BricksetService(), username: username, password: password, completion: handler)
+        case .rebrickable:
+            auth.login(authProvider: RebrickableService(), username: username, password: password, completion: handler)
+        }
+    }
+
+    private func nextViewController() -> UIViewController? {
+        let loginVC = LoginViewController()
+        switch (auth.rebrickableLoggedIn, auth.bricksetLoggedIn) {
+        case (true, true):
+            return nil
+        case (false, false):
+            fallthrough
+        case (false, true):
+            loginVC.loginType = .rebrickable
+        case (true, false):
+            loginVC.loginType = .brickset
+        }
+
+        return loginVC
     }
 
     @objc private func keyboardWillUpdate(notification: Notification) {
@@ -104,7 +147,6 @@ class LoginViewController: UIViewController {
     }
 
     private func setupTextFields() {
-        guard let loginType = loginType else { return }
         switch loginType {
         case .brickset:
             title = "Login to Brickset"

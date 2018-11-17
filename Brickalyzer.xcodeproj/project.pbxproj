@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		280EF7032180FF9B009EFEB2 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280EF7022180FF9B009EFEB2 /* RootViewController.swift */; };
 		2814D30B2163C98D002B341B /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2814D3092163C646002B341B /* AlamofireImage.framework */; };
 		2814D30C2163C98D002B341B /* AlamofireImage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2814D3092163C646002B341B /* AlamofireImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2814D30E21646E54002B341B /* BricksetModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2814D30D21646E54002B341B /* BricksetModels.swift */; };
@@ -33,6 +34,11 @@
 		28DD47BC2146414B00ADB53F /* SetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DD47BB2146414B00ADB53F /* SetsViewController.swift */; };
 		28ED7F372176D71700A42256 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28ED7F362176D71700A42256 /* LoginViewController.swift */; };
 		28ED7F392176E2C900A42256 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28ED7F382176E2C900A42256 /* Styles.swift */; };
+		28ED7F3B217B685F00A42256 /* KeychainAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28ED7F3A217B685F00A42256 /* KeychainAccess.framework */; };
+		28ED7F3C217B68A000A42256 /* KeychainAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28ED7F3A217B685F00A42256 /* KeychainAccess.framework */; };
+		28ED7F3D217B68A000A42256 /* KeychainAccess.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 28ED7F3A217B685F00A42256 /* KeychainAccess.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		28EDE390217B9A6D003C0142 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EDE38F217B9A6D003C0142 /* HomeViewController.swift */; };
+		28EDE392217B9AB8003C0142 /* AuthenticationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EDE391217B9AB8003C0142 /* AuthenticationModel.swift */; };
 		28FDDC252146011A00FD301A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FDDC242146011A00FD301A /* AppDelegate.swift */; };
 		28FDDC272146011A00FD301A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FDDC262146011A00FD301A /* ViewController.swift */; };
 		28FDDC2A2146011A00FD301A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28FDDC282146011A00FD301A /* Main.storyboard */; };
@@ -62,6 +68,7 @@
 				2868D36321560630004F446B /* CouchbaseLiteSwift.framework in Embed Frameworks */,
 				2868D36121560630004F446B /* Alamofire.framework in Embed Frameworks */,
 				2814D30C2163C98D002B341B /* AlamofireImage.framework in Embed Frameworks */,
+				28ED7F3D217B68A000A42256 /* KeychainAccess.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,6 +76,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		280EF7022180FF9B009EFEB2 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		2814D3092163C646002B341B /* AlamofireImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireImage.framework; path = Carthage/Build/iOS/AlamofireImage.framework; sourceTree = "<group>"; };
 		2814D30D21646E54002B341B /* BricksetModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BricksetModels.swift; sourceTree = "<group>"; };
 		283340D221647911001593E8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -92,6 +100,9 @@
 		28DD47BB2146414B00ADB53F /* SetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetsViewController.swift; sourceTree = "<group>"; };
 		28ED7F362176D71700A42256 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		28ED7F382176E2C900A42256 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		28ED7F3A217B685F00A42256 /* KeychainAccess.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KeychainAccess.framework; path = Carthage/Build/iOS/KeychainAccess.framework; sourceTree = "<group>"; };
+		28EDE38F217B9A6D003C0142 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		28EDE391217B9AB8003C0142 /* AuthenticationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationModel.swift; sourceTree = "<group>"; };
 		28FDDC212146011A00FD301A /* Brickalyzer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Brickalyzer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28FDDC242146011A00FD301A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		28FDDC262146011A00FD301A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -112,7 +123,9 @@
 			files = (
 				283340D521647917001593E8 /* Accounts.framework in Frameworks */,
 				283340D321647911001593E8 /* Security.framework in Frameworks */,
+				28ED7F3C217B68A000A42256 /* KeychainAccess.framework in Frameworks */,
 				2868D36221560630004F446B /* CouchbaseLiteSwift.framework in Frameworks */,
+				28ED7F3B217B685F00A42256 /* KeychainAccess.framework in Frameworks */,
 				2868D36021560630004F446B /* Alamofire.framework in Frameworks */,
 				2814D30B2163C98D002B341B /* AlamofireImage.framework in Frameworks */,
 				283340DE21647A61001593E8 /* SOAPEngine64.framework in Frameworks */,
@@ -153,6 +166,7 @@
 			children = (
 				2844093921460F3F00A62445 /* Models.swift */,
 				2844093B2146207000A62445 /* Colors.swift */,
+				28EDE391217B9AB8003C0142 /* AuthenticationModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -171,6 +185,7 @@
 		284409172146080900A62445 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				28ED7F3A217B685F00A42256 /* KeychainAccess.framework */,
 				283340DC21647A59001593E8 /* SOAPEngine64.framework */,
 				283340D421647916001593E8 /* Accounts.framework */,
 				283340D221647911001593E8 /* Security.framework */,
@@ -203,10 +218,12 @@
 		28DD47B32146412200ADB53F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				28EDE38F217B9A6D003C0142 /* HomeViewController.swift */,
+				28ED7F362176D71700A42256 /* LoginViewController.swift */,
+				28B127A5214ED0E000989357 /* ScanSetViewController.swift */,
 				28DD47BB2146414B00ADB53F /* SetsViewController.swift */,
 				28B127A3214ED0CF00989357 /* SetViewController.swift */,
-				28B127A5214ED0E000989357 /* ScanSetViewController.swift */,
-				28ED7F362176D71700A42256 /* LoginViewController.swift */,
+				280EF7022180FF9B009EFEB2 /* RootViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -360,7 +377,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2844094221462D9100A62445 /* AFHelpers.swift in Sources */,
+				28EDE392217B9AB8003C0142 /* AuthenticationModel.swift in Sources */,
 				28B127A4214ED0CF00989357 /* SetViewController.swift in Sources */,
+				28EDE390217B9A6D003C0142 /* HomeViewController.swift in Sources */,
 				28DD47BC2146414B00ADB53F /* SetsViewController.swift in Sources */,
 				28FDDC272146011A00FD301A /* ViewController.swift in Sources */,
 				283340FD2167CF03001593E8 /* Errors.swift in Sources */,
@@ -374,6 +393,7 @@
 				283340F92165CA1D001593E8 /* Codable+Extensions.swift in Sources */,
 				28B127A6214ED0E000989357 /* ScanSetViewController.swift in Sources */,
 				28ED7F372176D71700A42256 /* LoginViewController.swift in Sources */,
+				280EF7032180FF9B009EFEB2 /* RootViewController.swift in Sources */,
 				283340FB2166F169001593E8 /* UIView+Extensions.swift in Sources */,
 				2844093A21460F3F00A62445 /* Models.swift in Sources */,
 				28B127B5214EDC2200989357 /* BricksetService.swift in Sources */,

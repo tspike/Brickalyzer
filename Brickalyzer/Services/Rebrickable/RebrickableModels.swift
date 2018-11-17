@@ -9,6 +9,14 @@
 import Foundation
 import Alamofire
 
+struct RebrickableLoginResponse: Codable {
+    let userToken: String
+
+    enum CodingKeys: String, CodingKey {
+        case userToken = "user_token"
+    }
+}
+
 struct RebrickableSets: Codable {
     let count: Int
     let next: String

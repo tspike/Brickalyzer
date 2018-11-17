@@ -9,7 +9,8 @@
 import Foundation
 import SOAPEngine64
 
-struct BricksetService {
+struct BricksetService: AuthProvider {
+    let keychainKey: String = "brickset"
     func soap() -> SOAPEngine {
         let soap = SOAPEngine()
         soap.userAgent = "Brickalyzer"
@@ -34,6 +35,38 @@ struct BricksetService {
             print(e)
         }
 
+    }
+
+    func login(username: String, password: String, completion: @escaping (String?, Error?) -> Void) {
+        let soap = self.soap()
+        soap.setValue(username, forKey: "username")
+        soap.setValue(password, forKey: "password")
+        //         orderBySpecify sort order. Valid values are Number, YearFrom, Pieces, Minifigs, Rating, UKRetailPrice, USRetailPrice, CARetailPrice, EURetailPrice, Theme, Subtheme, Name, Random. Add 'DESC' to the end to sort descending, e.g. NameDESC.
+        //        soap.setValue("", forKey: "apiKey")
+        //        <s:element minOccurs="0" maxOccurs="1" name="apiKey" type="s:string"/>
+        //        <s:element minOccurs="0" maxOccurs="1" name="userHash" type="s:string"/>
+        //        <s:element minOccurs="0" maxOccurs="1" name="SetID" type="s:string"/>
+        soap.requestURL("https://brickset.com/api/v2.asmx",
+                        soapAction: "https://brickset.com/api/login",
+                        completeWithDictionary: { statusCode, result in
+                            guard let result = result as [AnyHashable: Any]?,
+                                let body = result["Body"] as? [AnyHashable: Any],
+                                let loginResponse = body["loginResponse"] as? [AnyHashable: Any],
+                                let loginResult = loginResponse["loginResult"] as? String
+                                else {
+                                    completion(nil, BrickError.error("Invalid response from Brickset"))
+                                    return
+                            }
+                            if loginResult.contains("ERROR") {
+                                completion(nil, BrickError.error(loginResult))
+                                return
+                            }
+                            completion(loginResult, nil)
+        }, failWithError: { (e) in
+            guard let e = e else { return }
+            completion(nil, e)
+            return
+        })
     }
 
     func getSet(setID: String, completion: ((BricksetSet?, Error?) -> Void)?) {
